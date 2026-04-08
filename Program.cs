@@ -12,7 +12,7 @@ public partial class Program
 
         // Add services to the container.
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
-            options.UseSqlite("Data Source=salary_calculator.db"));
+            options.UseSqlite("Data Source=salary_calculator.db")); //feel free to use any database just dala what you must, by putting the nuget packages.
 
         builder.Services.AddScoped<SalaryCalculationService>();
 
