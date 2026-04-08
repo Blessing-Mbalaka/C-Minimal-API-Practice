@@ -1,0 +1,325 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>SA Salary Calculator</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+            background-color: #f5f5f5;
+        }
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+        h1 {
+            color: #2c3e50;
+            border-bottom: 3px solid #3498db;
+            padding-bottom: 10px;
+        }
+        .section {
+            margin: 25px 0;
+            padding: 20px;
+            background: #f8f9fa;
+            border-radius: 5px;
+        }
+        .section h3 {
+            margin-top: 0;
+            color: #34495e;
+        }
+        .form-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+            margin-bottom: 15px;
+        }
+        .form-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            margin-bottom: 5px;
+            font-weight: bold;
+            color: #555;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 2px solid #ddd;
+            border-radius: 4px;
+            box-sizing: border-box;
+            font-size: 14px;
+        }
+        input:focus, select:focus {
+            outline: none;
+            border-color: #3498db;
+        }
+        button {
+            background-color: #27ae60;
+            color: white;
+            padding: 12px 30px;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            margin-right: 10px;
+        }
+        button:hover {
+            background-color: #229954;
+        }
+        button.secondary {
+            background-color: #3498db;
+        }
+        button.secondary:hover {
+            background-color: #2980b9;
+        }
+        .result {
+            margin-top: 30px;
+            padding: 20px;
+            background-color: #e8f8f5;
+            border-left: 4px solid #27ae60;
+            border-radius: 4px;
+            display: none;
+        }
+        .result h3 {
+            color: #27ae60;
+            margin-top: 0;
+        }
+        .salary-breakdown {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 15px;
+        }
+        .salary-item {
+            padding: 10px;
+            background: white;
+            border-radius: 4px;
+        }
+        .salary-item strong {
+            color: #2c3e50;
+        }
+        .total {
+            grid-column: 1 / -1;
+            background: #27ae60;
+            color: white;
+            font-size: 1.2em;
+            font-weight: bold;
+            text-align: center;
+            padding: 15px;
+        }
+        .error {
+            color: #e74c3c;
+            background: #fadbd8;
+            padding: 10px;
+            border-radius: 4px;
+            margin-top: 10px;
+            display: none;
+        }
+        .currency {
+            color: #27ae60;
+            font-weight: bold;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🇿🇦 South African Salary Calculator</h1>
+
+        <div class="section">
+            <h3>Employee Information</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Name:</label>
+                    <input type="text" id="name" placeholder="John" required>
+                </div>
+                <div class="form-group">
+                    <label>Surname:</label>
+                    <input type="text" id="surname" placeholder="Doe" required>
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Email:</label>
+                    <input type="email" id="email" placeholder="john.doe@example.com" required>
+                </div>
+                <div class="form-group">
+                    <label>Job Title:</label>
+                    <input type="text" id="jobTitle" placeholder="Software Developer">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Employment Type:</label>
+                <select id="employmentType">
+                    <option value="Full-time">Full-time</option>
+                    <option value="Part-time">Part-time</option>
+                    <option value="Contract">Contract</option>
+                    <option value="Temporary">Temporary</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="section">
+            <h3>Salary Details</h3>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Hourly Rate (R):</label>
+                    <input type="number" id="hourlyRate" step="0.01" min="0" value="150.00">
+                </div>
+                <div class="form-group">
+                    <label>Period (e.g., January 2024):</label>
+                    <input type="text" id="period" placeholder="January 2024">
+                </div>
+            </div>
+            <div class="form-row">
+                <div class="form-group">
+                    <label>Regular Hours:</label>
+                    <input type="number" id="regularHours" min="0" value="160">
+                </div>
+                <div class="form-group">
+                    <label>Overtime Hours:</label>
+                    <input type="number" id="overtimeHours" min="0" value="0">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Variable Amount (Bonus/Commission) (R):</label>
+                <input type="number" id="variableAmount" step="0.01" min="0" value="0">
+            </div>
+        </div>
+
+        <button onclick="calculateAndSave()">💾 Calculate & Save to Database</button>
+        <button class="secondary" onclick="viewAllEmployees()">👥 View All Employees</button>
+
+        <div id="result" class="result"></div>
+        <div id="error" class="error"></div>
+    </div>
+
+    <script>
+        //window.location.origin specifies port for Base URL used below.
+        //manje here tirikuwudza API yedu kuti, tirikuda kuti yishandise location ye window kuti yishandise port yarikuda.
+        const API_BASE_URL = window.location.origin;
+
+        async function calculateAndSave() {
+            const request = {
+
+                //Apa tiriku gadzira structure ye-request yedu. 
+                //Ma-endpoint elementIDs are defined 
+                name: document.getElementById('name').value,
+                surname: document.getElementById('surname').value,
+                email: document.getElementById('email').value,
+                jobTitle: document.getElementById('jobTitle').value,
+                employmentType: document.getElementById('employmentType').value,
+                hourlyRate: parseFloat(document.getElementById('hourlyRate').value),
+                regularHours: parseInt(document.getElementById('regularHours').value),
+                overtimeHours: parseInt(document.getElementById('overtimeHours').value),
+                variableAmount: parseFloat(document.getElementById('variableAmount').value || 0),
+                period: document.getElementById('period').value
+            };
+
+            document.getElementById('result').style.display = 'none';
+            document.getElementById('error').style.display = 'none';
+
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/employee/calculate-and-save`, {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify(request)
+                });
+
+                if (!response.ok) {
+                    const error = await response.json();
+                    throw new Error(error.error || 'Something went wrong');
+                }
+
+                const data = await response.json();
+
+                document.getElementById('result').innerHTML = `
+                    <h3>✅ Salary Calculated & Saved!</h3>
+                    <p><strong>Employee:</strong> ${data.name} (${data.email})</p>
+                    <p><strong>Job Title:</strong> ${data.jobTitle} - ${data.employmentType}</p>
+                    <p><strong>Period:</strong> ${data.calculation.period}</p>
+
+                    <div class="salary-breakdown">
+                        <div class="salary-item">
+                            <strong>Hourly Rate:</strong><br>
+                            <span class="currency">R ${data.calculation.hourlyRate.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>Regular Hours:</strong><br>
+                            ${data.calculation.regularHours}h
+                        </div>
+                        <div class="salary-item">
+                            <strong>Basic Salary:</strong><br>
+                            <span class="currency">R ${data.calculation.basicSalary.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>Overtime (${data.calculation.overtimeHours}h @ 1.5x):</strong><br>
+                            <span class="currency">R ${data.calculation.overtimePay.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>Variable/Bonus:</strong><br>
+                            <span class="currency">R ${data.calculation.variableAmount.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>Gross Salary:</strong><br>
+                            <span class="currency">R ${data.calculation.grossSalary.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>UIF (1%):</strong><br>
+                            <span style="color: #e74c3c">-R ${data.calculation.deductions.uif.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>PAYE Tax:</strong><br>
+                            <span style="color: #e74c3c">-R ${data.calculation.deductions.paye.toFixed(2)}</span>
+                        </div>
+                        <div class="salary-item">
+                            <strong>Total Deductions:</strong><br>
+                            <span style="color: #e74c3c">-R ${data.calculation.deductions.total.toFixed(2)}</span>
+                        </div>
+                        <div class="total">
+                            Net Salary: R ${data.calculation.netSalary.toFixed(2)}
+                        </div>
+                    </div>
+                `;
+                document.getElementById('result').style.display = 'block';
+
+            } catch (error) {
+                document.getElementById('error').textContent = `Error: ${error.message}`;
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+
+        async function viewAllEmployees() {
+            try {
+                const response = await fetch(`${API_BASE_URL}/api/employee`);
+                const employees = await response.json();
+
+                let html = '<h3>👥 All Employees</h3><div class="salary-breakdown">';
+                employees.forEach(emp => {
+                    html += `
+                        <div class="salary-item">
+                            <strong>${emp.name} ${emp.surname}</strong><br>
+                            ${emp.email}<br>
+                            ${emp.jobTitle}<br>
+                            <small>Rate: R${emp.hourlyRate.toFixed(2)}/hr</small>
+                        </div>
+                    `;
+                });
+                html += '</div>';
+
+                document.getElementById('result').innerHTML = html;
+                document.getElementById('result').style.display = 'block';
+            } catch (error) {
+                document.getElementById('error').textContent = `Error: ${error.message}`;
+                document.getElementById('error').style.display = 'block';
+            }
+        }
+    </script>
+</body>
+</html>
