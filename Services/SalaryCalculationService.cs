@@ -7,7 +7,11 @@ namespace API_Endpoints_Salary_Calculator.Services
     /// </summary>
     public class SalaryCalculationService
     {
-        // SARS 2024/2025 Tax Year Brackets (1 March 2024 - 28 February 2025)
+        
+
+        //Check inside DTO folder in tacbracket class to see the fields defined there if you get lost. Just follow the order there and
+        //it will be chips.
+        
         private readonly List<TaxBracket> _taxBrackets2024_2025 = new()
         {
             // R1 - R237,100: 18% of taxable income
