@@ -14,6 +14,7 @@ public partial class Program
         builder.Services.AddDbContext<ApplicationDbContext>(options =>
             options.UseSqlite("Data Source=salary_calculator.db")); //feel free to use any database just dala what you must, by putting the nuget packages.
 
+        //This line is to just add what you see in the diamond operators; you'll understand by reading it.
         builder.Services.AddScoped<SalaryCalculationService>();
 
         builder.Services.AddControllers();
