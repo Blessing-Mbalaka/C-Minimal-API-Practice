@@ -32,6 +32,8 @@ namespace API_Endpoints_Salary_Calculator.Models
         /// </summary>
         public decimal Rate { get; set; }
 
+
+        //constructor and fields defined.
         public TaxBracket(decimal minIncome, decimal? maxIncome, decimal baseTax, decimal rate)
         {
             MinIncome = minIncome;
