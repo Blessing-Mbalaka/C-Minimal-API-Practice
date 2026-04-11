@@ -1,5 +1,12 @@
 namespace API_Endpoints_Salary_Calculator.Models
 {
+
+//Quick explanation of the code: So here its nothing fancy, we just defining fields used in the calculation. 
+
+
+
+
+
     /// <summary>
     /// Represents a single SARS tax bracket for PAYE calculation
     /// </summary>
