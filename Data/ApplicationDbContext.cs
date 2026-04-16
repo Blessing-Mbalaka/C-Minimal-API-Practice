@@ -37,6 +37,7 @@ namespace API_Endpoints_Salary_Calculator.Data
                 entity.Property(sc => sc.GrossSalary).HasPrecision(18, 2);
                 entity.Property(sc => sc.UIF).HasPrecision(18, 2);
                 entity.Property(sc => sc.PAYE).HasPrecision(18, 2);
+                entity.Property(sc => sc.RetirementFund).HasPrecision(18, 2);
                 entity.Property(sc => sc.TotalDeductions).HasPrecision(18, 2);
                 entity.Property(sc => sc.NetSalary).HasPrecision(18, 2);
                 entity.Property(sc => sc.UIF_Employer).HasPrecision(18, 2);

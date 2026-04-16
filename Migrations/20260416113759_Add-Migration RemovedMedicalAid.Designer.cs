@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API_Endpoints_Salary_Calculator.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20260408210840_InitialCreate")]
-    partial class InitialCreate
+    [Migration("20260416113759_Add-Migration RemovedMedicalAid")]
+    partial class AddMigrationRemovedMedicalAid
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -74,6 +74,10 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                     b.Property<DateTime>("CalculatedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("CostToCompany")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("INTEGER");
 
@@ -100,14 +104,6 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                         .HasPrecision(18, 2)
                         .HasColumnType("TEXT");
 
-                    b.Property<decimal>("RetirementFund")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("TEXT");  // added retirement fund to model builder as well as medical aid
-
-                    b.Property<decimal>("MedicalAid")
-                        .HasPrecision(18, 2)
-                        .HasColumnType("TEXT");
-
                     b.Property<string>("Period")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -115,11 +111,27 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                     b.Property<int>("RegularHours")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("RetirementFund")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("SDL")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("TotalDeductions")
                         .HasPrecision(18, 2)
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("TotalEmployerCosts")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("UIF")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("UIF_Employer")
                         .HasPrecision(18, 2)
                         .HasColumnType("TEXT");
 

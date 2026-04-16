@@ -71,6 +71,10 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                     b.Property<DateTime>("CalculatedAt")
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("CostToCompany")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("EmployeeId")
                         .HasColumnType("INTEGER");
 
@@ -104,11 +108,27 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                     b.Property<int>("RegularHours")
                         .HasColumnType("INTEGER");
 
+                    b.Property<decimal>("RetirementFund")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("SDL")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("TotalDeductions")
                         .HasPrecision(18, 2)
                         .HasColumnType("TEXT");
 
+                    b.Property<decimal>("TotalEmployerCosts")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
                     b.Property<decimal>("UIF")
+                        .HasPrecision(18, 2)
+                        .HasColumnType("TEXT");
+
+                    b.Property<decimal>("UIF_Employer")
                         .HasPrecision(18, 2)
                         .HasColumnType("TEXT");
 

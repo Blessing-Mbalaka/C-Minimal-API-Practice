@@ -71,23 +71,26 @@ namespace API_Endpoints_Salary_Calculator.Controllers
             // This annualizes the income, calculates annual tax, then divides by 12
             var paye = _salaryService.CalculateMonthlyPAYE(grossSalary);
 
-            // 6. Calculate Total Employee Deductions
-            var totalDeductions = uifEmployee + paye;
+            //6. Calculate Retirement Fund based on based on SARS 2024/2025 contributions list
+            var RtmFund = _salaryService.CalculateRetirementFund(grossSalary);
 
-            // 7. Calculate Net Salary (Take-home pay after deductions)
+            // 7. Calculate Total Employee Deductions
+            var totalDeductions = uifEmployee + paye + RtmFund;
+
+            // 8. Calculate Net Salary (Take-home pay after deductions)
             var netSalary = grossSalary - totalDeductions;
 
             // EMPLOYER COSTS (paid by employer to SARS, NOT deducted from employee):
-            // 8. Calculate UIF Employer Portion - 1% of gross, capped at R177.12
+            // 9. Calculate UIF Employer Portion - 1% of gross, capped at R177.12
             var uifEmployer = _salaryService.CalculateUIF(grossSalary);
 
-            // 9. Calculate SDL (Skills Development Levy) - 1% of gross payroll
+            // 10. Calculate SDL (Skills Development Levy) - 1% of gross payroll
             var sdl = _salaryService.CalculateSDL(grossSalary);
 
-            // 10. Calculate Total Employer Costs
+            // 11. Calculate Total Employer Costs
             var totalEmployerCosts = uifEmployer + sdl;
 
-            // 11. Calculate Total Cost to Company (Gross Salary + Employer Contributions)
+            // 12. Calculate Total Cost to Company (Gross Salary + Employer Contributions)
             var costToCompany = grossSalary + totalEmployerCosts;
 
             // Store the salary calculation in the database
@@ -104,6 +107,7 @@ namespace API_Endpoints_Salary_Calculator.Controllers
                 GrossSalary = grossSalary,
                 UIF = uifEmployee,
                 PAYE = paye,
+                RetirementFund = RtmFund,
                 TotalDeductions = totalDeductions,
                 NetSalary = netSalary,
                 UIF_Employer = uifEmployer,
@@ -138,6 +142,7 @@ namespace API_Endpoints_Salary_Calculator.Controllers
                     {
                         Uif = calculation.UIF,
                         Paye = calculation.PAYE,
+                        RetirementFund= calculation.RetirementFund,
                         Total = calculation.TotalDeductions
                     },
                     NetSalary = calculation.NetSalary

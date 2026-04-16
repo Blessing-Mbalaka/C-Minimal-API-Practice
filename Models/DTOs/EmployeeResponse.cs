@@ -33,6 +33,7 @@ namespace API_Endpoints_Salary_Calculator.Models.DTOs
         public decimal Uif { get; set; }  // Employee portion
         public decimal Paye { get; set; }
         public decimal Total { get; set; }
+        public decimal RetirementFund { get; set; }  // added retirement fund to deduction details
     }
 
     public class EmployerCostsDetails

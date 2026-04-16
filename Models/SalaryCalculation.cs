@@ -20,6 +20,7 @@ namespace API_Endpoints_Salary_Calculator.Models
         // Employee Deductions (deducted from employee salary)
         public decimal UIF { get; set; }  // Employee portion (1%)
         public decimal PAYE { get; set; }
+        public decimal RetirementFund { get; set; } // Added retirement fund to employee deductions
         public decimal TotalDeductions { get; set; }
         public decimal NetSalary { get; set; }  // Employee take-home pay
 

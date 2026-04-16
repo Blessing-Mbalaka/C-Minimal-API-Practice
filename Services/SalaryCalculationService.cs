@@ -131,6 +131,18 @@ namespace API_Endpoints_Salary_Calculator.Services
         }
 
         /// <summary>
+        /// Calculates Retirement Fund percentage taken off of employee salary
+        /// </summary>
+        /// <param name="grossSalary">Monthly gross salary</param>
+        /// <returns>Retirement Fund contribution amount</returns>
+        public decimal CalculateRetirementFund (decimal grossSalary)
+        {
+            const decimal RetFund_Rate = 0.075m;
+
+            return grossSalary * RetFund_Rate;
+        }
+
+        /// <summary>
         /// Gets the current tax year being used for calculations
         /// </summary>
         /// <returns>Tax year description</returns>

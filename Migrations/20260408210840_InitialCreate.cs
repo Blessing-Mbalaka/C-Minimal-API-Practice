@@ -46,7 +46,8 @@ namespace API_Endpoints_Salary_Calculator.Migrations
                     OvertimePay = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
                     GrossSalary = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
                     UIF = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
-                    PAYE = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
+                    PAYE = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false), // added retirement fund deduction
+                    RetirementFund = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
                     TotalDeductions = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
                     NetSalary = table.Column<decimal>(type: "TEXT", precision: 18, scale: 2, nullable: false),
                     CalculatedAt = table.Column<DateTime>(type: "TEXT", nullable: false)
