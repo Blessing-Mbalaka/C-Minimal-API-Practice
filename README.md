@@ -5,6 +5,8 @@ Good day. This is a long document, so I summarise everything here. hope all is g
 and we need to basically need to use 2 urls for the main logic, which is display employee by ID and
 to also display
 
+To do list: Add max hours for work and overtime hours per week
+            Add logic for sunday pay and holiday pay
 
 API BASE URL: https://localhost:7233
 
